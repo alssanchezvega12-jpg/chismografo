@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
 app.use(cors());
@@ -47,8 +48,14 @@ app.delete('/usuarios/:id', async (req, res) => {
   }
 });
 
+// Servir archivos estáticos (HTML, CSS, JS)
+app.use(express.static(path.join(__dirname)));
+
+// Ruta raíz
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+// Puerto
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`));
-app.get('/', (req, res) => {
-  res.send('Servidor funcionando correctamente 🚀');
-});
