@@ -1,0 +1,146 @@
+/* Fondo general y tipografía */
+body {
+  font-family: 'Comic Neue', cursive;
+  background: linear-gradient(135deg, #ffb6c1, #ff4d6d); /* rosa → rojo */
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  color: #333;
+}
+
+/* Contenedor principal */
+.container {
+  background: rgba(255,255,255,0.9);
+  margin: 40px auto;
+  padding: 25px;
+  width: 90%;
+  max-width: 500px;
+  border-radius: 20px;
+  border: 3px dashed #ff69b4;
+  box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+  animation: fadeIn 0.8s ease;
+}
+
+/* Título */
+h1 {
+  color: #d63384;
+  text-shadow: 1px 1px 2px #fff;
+}
+
+/* Formulario */
+form {
+  display: grid;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  transition: box-shadow 0.3s ease;
+}
+
+input:focus {
+  box-shadow: 0 0 8px #ff69b4;
+  outline: none;
+}
+
+/* Botón Guardar */
+#btnGuardar {
+  background: #d63384;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+#btnGuardar:hover {
+  background: #a61e5c;
+  transform: scale(1.05);
+}
+
+/* Botones de navegación */
+.nav-buttons {
+  margin-top: 20px;
+}
+
+.btn-link {
+  background: #ff69b4;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 5px;
+  font-weight: bold;
+  text-decoration: none;
+  display: inline-block;
+  transition: transform 0.2s, background-color 0.3s;
+}
+
+.btn-link:hover {
+  background: #ff85c1;
+  transform: scale(1.05);
+}
+
+/* Secciones (Usuarios y Top Guapos) */
+.section {
+  background: rgba(255,255,255,0.9);
+  margin: 30px auto;
+  padding: 20px;
+  width: 90%;
+  max-width: 500px;
+  border-radius: 15px;
+  border: 2px solid #ff69b4;
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+  animation: fadeIn 0.8s ease;
+}
+
+.section h2 {
+  color: #d63384;
+  margin-bottom: 10px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  padding: 6px 0;
+  border-bottom: 1px solid #eee;
+}
+
+/* Botón Eliminar */
+.btn-borrar {
+  background-color: #e74c3c; /* rojo */
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  margin-left: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-borrar:hover {
+  background-color: #c0392b; /* rojo más oscuro */
+  transform: scale(1.05); /* efecto de zoom */
+}
+
+.btn-borrar:active {
+  background-color: #a93226; /* rojo aún más intenso */
+  transform: scale(0.95); /* efecto de clic */
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
