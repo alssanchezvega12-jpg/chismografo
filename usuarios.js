@@ -3,10 +3,10 @@ const contenedor = document.createElement('div');
 contenedor.style.textAlign = 'center';
 document.body.appendChild(contenedor);
 
-// Función para mostrar usuarios
 async function mostrarUsuarios() {
   try {
-    const res = await fetch('http://localhost:5000/usuarios');
+    // 🌐 Usa la URL completa del backend en Render
+    const res = await fetch('https://chismografo-17nu.onrender.com/usuarios');
     const usuarios = await res.json();
 
     contenedor.innerHTML = ''; // Limpia el contenido anterior
@@ -16,6 +16,7 @@ async function mostrarUsuarios() {
       return;
     }
 
+    // Crear tarjetas para cada usuario
     usuarios.forEach(u => {
       const card = document.createElement('div');
       card.style.background = '#fff';
@@ -24,6 +25,7 @@ async function mostrarUsuarios() {
       card.style.margin = '10px auto';
       card.style.width = '250px';
       card.style.boxShadow = '0 2px 5px rgba(0,0,0,0.2)';
+
       card.innerHTML = `
         <p><strong>👤 Nombre:</strong> ${u.nombre}</p>
         <p><strong>🎂 Edad:</strong> ${u.edad}</p>
@@ -31,6 +33,7 @@ async function mostrarUsuarios() {
         <p><strong>💘 Le gusta:</strong> ${u.gusta}</p>
         <button class="btnEliminar" data-id="${u._id}">🗑️ Eliminar</button>
       `;
+
       contenedor.appendChild(card);
     });
 
@@ -38,7 +41,7 @@ async function mostrarUsuarios() {
     document.querySelectorAll('.btnEliminar').forEach(btn => {
       btn.addEventListener('click', async () => {
         const id = btn.getAttribute('data-id');
-        await fetch(`http://localhost:5000/usuarios/${id}`, { method: 'DELETE' });
+        await fetch(`https://chismografo-17nu.onrender.com/usuarios/${id}`, { method: 'DELETE' });
         mostrarUsuarios(); // Actualiza la lista
       });
     });

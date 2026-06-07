@@ -139,6 +139,48 @@ li {
   transform: scale(0.95); /* efecto de clic */
 }
 
+/* Tarjetas de usuario */
+.usuario-card {
+  background: #ffe6f0; /* Rosa claro */
+  border-radius: 12px;
+  padding: 15px;
+  margin: 15px auto;
+  width: 280px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  font-family: 'Comic Neue', cursive;
+}
+
+.usuario-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+}
+
+.usuario-card p {
+  margin: 8px 0;
+  color: #333;
+}
+
+.usuario-card strong {
+  color: #d63384; /* Rosa más intenso */
+}
+
+/* Botón Eliminar dentro de tarjeta */
+.btnEliminar {
+  background: #ff4d6d;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btnEliminar:hover {
+  background: #c9184a;
+}
+
 /* Animaciones */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }

@@ -12,7 +12,7 @@ form.addEventListener('submit', async (e) => {
 
   try {
     // 🔧 Usa la URL completa del backend
-    const res = await fetch('http://localhost:5000/usuarios', {
+    const res = await fetch('https://chismografo-17nu.onrender.com/usuarios', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(nuevoUsuario)
