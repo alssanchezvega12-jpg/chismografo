@@ -5,13 +5,14 @@ document.body.appendChild(contenedor);
 
 async function mostrarTopGuapos() {
   try {
-    const res = await fetch('http://localhost:5000/usuarios');
+    // 🌐 Usa la URL completa del backend en Render
+    const res = await fetch('https://chismografo-17nu.onrender.com/usuarios');
     const usuarios = await res.json();
 
-    contenedor.innerHTML = '';
+    contenedor.innerHTML = ''; // Limpia el contenido anterior
 
     if (usuarios.length === 0) {
-      contenedor.innerHTML = '<p>😕 No hay datos registrados todavía.</p>';
+      contenedor.innerHTML = '<p>😕 No hay usuarios registrados todavía.</p>';
       return;
     }
 
