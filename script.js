@@ -38,6 +38,7 @@ document.getElementById('btnLeer').addEventListener('click', async () => {
       <h3>👥 Usuarios registrados:</h3>
       <table border="1" style="border-collapse: collapse; width: 100%; text-align: center;">
         <tr style="background-color: pink;">
+          <th>🆔 ID</th>
           <th>👤 Nombre</th>
           <th>🎂 Edad</th>
           <th>🎨 Color Favorito</th>
@@ -47,6 +48,7 @@ document.getElementById('btnLeer').addEventListener('click', async () => {
     datos.forEach(u => {
       tabla += `
         <tr>
+          <td>${u._id}</td>
           <td>${u.nombre}</td>
           <td>${u.edad}</td>
           <td>${u.color}</td>
@@ -65,7 +67,7 @@ document.getElementById('btnLeer').addEventListener('click', async () => {
 
 // ✏️ Actualizar usuario
 document.getElementById('btnActualizar').addEventListener('click', async () => {
-  const nombre = document.getElementById('nombre').value;
+  const id = prompt("Escribe el ID del usuario a actualizar:");
   const actualizado = {
     edad: document.getElementById('edad').value,
     color: document.getElementById('colorFavorito').value,
@@ -73,13 +75,13 @@ document.getElementById('btnActualizar').addEventListener('click', async () => {
   };
 
   try {
-    const res = await fetch(`https://chismografo-17nu.onrender.com/usuarios/${nombre}`, {
+    const res = await fetch(`https://chismografo-17nu.onrender.com/usuarios/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(actualizado)
     });
     if (res.ok) {
-      resultado.innerHTML = `🔄 ${nombre} fue actualizado correctamente`;
+      resultado.innerHTML = `🔄 Usuario con ID ${id} fue actualizado correctamente`;
     } else {
       resultado.innerHTML = '❌ Error al actualizar';
     }
@@ -91,13 +93,13 @@ document.getElementById('btnActualizar').addEventListener('click', async () => {
 
 // 🗑️ Eliminar usuario
 document.getElementById('btnEliminar').addEventListener('click', async () => {
-  const nombre = document.getElementById('nombre').value;
+  const id = prompt("Escribe el ID del usuario a eliminar:");
   try {
-    const res = await fetch(`https://chismografo-17nu.onrender.com/usuarios/${nombre}`, {
+    const res = await fetch(`https://chismografo-17nu.onrender.com/usuarios/${id}`, {
       method: 'DELETE'
     });
     if (res.ok) {
-      resultado.innerHTML = `🗑️ ${nombre} fue eliminado correctamente`;
+      resultado.innerHTML = `🗑️ Usuario con ID ${id} fue eliminado correctamente`;
       document.getElementById('chismeForm').reset();
     } else {
       resultado.innerHTML = '❌ Error al eliminar';
