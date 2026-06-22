@@ -1,8 +1,7 @@
-const form = document.getElementById('chismeForm');
+const resultado = document.getElementById('resultado');
 
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-
+// ➕ Crear usuario
+document.getElementById('btnCrear').addEventListener('click', async () => {
   const nuevoUsuario = {
     nombre: document.getElementById('nombre').value,
     edad: document.getElementById('edad').value,
@@ -11,7 +10,6 @@ form.addEventListener('submit', async (e) => {
   };
 
   try {
-    // 🔧 Usa la URL completa del backend
     const res = await fetch('https://chismografo-17nu.onrender.com/usuarios', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -19,13 +17,13 @@ form.addEventListener('submit', async (e) => {
     });
 
     if (res.ok) {
-      alert(`💾 ${nuevoUsuario.nombre} fue registrado correctamente 🎉`);
-      form.reset();
+      resultado.innerHTML = `💾 ${nuevoUsuario.nombre} fue registrado correctamente 🎉`;
+      document.getElementById('chismeForm').reset();
     } else {
-      alert('❌ Error al guardar');
+      resultado.innerHTML = '❌ Error al guardar';
     }
   } catch (err) {
     console.error(err);
-    alert('❌ Error de conexión');
+    resultado.innerHTML = '❌ Error de conexión';
   }
 });
