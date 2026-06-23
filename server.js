@@ -57,18 +57,22 @@ app.put('/usuarios/:id', async (req, res) => {
   }
 });
 
-// 🗑️ Eliminar usuario por ID
-app.delete('/usuarios/:id', async (req, res) => {
+// Ruta para eliminar por nombre
+app.delete('/usuarios/:nombre', async (req, res) => {
   try {
-    const eliminado = await Usuario.findByIdAndDelete(req.params.id);
-    if (!eliminado) {
-      return res.status(404).json({ error: 'Usuario no encontrado' });
+    const nombreUsuario = req.params.nombre;
+    const resultado = await Usuario.findOneAndDelete({ nombre: nombreUsuario });
+
+    if (!resultado) {
+      return res.status(404).json({ mensaje: 'Usuario no encontrado' });
     }
-    res.json({ mensaje: 'Usuario eliminado ✅' });
-  } catch (err) {
-    res.status(500).json({ error: 'Error al eliminar' });
+
+    res.json({ mensaje: 'Usuario eliminado correctamente' });
+  } catch (error) {
+    res.status(500).json({ mensaje: 'Error al eliminar', error });
   }
 });
+
 
 // Servir archivos estáticos (HTML, CSS, JS)
 app.use(express.static(path.join(__dirname)));
