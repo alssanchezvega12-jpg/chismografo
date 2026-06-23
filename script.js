@@ -130,21 +130,12 @@ async function guardarCambiosFila(id) {
   }
 }
 
-// 🗑️ Eliminar usuario
-document.getElementById('btnEliminar').addEventListener('click', async () => {
-  const id = prompt("Escribe el ID del usuario a eliminar:");
-  try {
-    const res = await fetch(`https://chismografo-17nu.onrender.com/usuarios/${id}`, {
-      method: 'DELETE'
-    });
-    if (res.ok) {
-      resultado.innerHTML = `🗑️ Usuario con ID ${id} fue eliminado correctamente`;
-      document.getElementById('chismeForm').reset();
-    } else {
-      resultado.innerHTML = '❌ Error al eliminar';
-    }
-  } catch (err) {
-    console.error(err);
-    resultado.innerHTML = '❌ Error de conexión';
+function eliminarUsuario() {
+  const nombre = prompt("Escribe el nombre del usuario a eliminar:");
+  if (nombre) {
+    fetch(`/usuarios/${nombre}`, { method: 'DELETE' })
+      .then(res => res.json())
+      .then(data => alert(data.mensaje))
+      .catch(() => alert("Error al eliminar"));
   }
-});
+}
