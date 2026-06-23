@@ -159,3 +159,33 @@ document.getElementById('btnEliminar').addEventListener('click', async () => {
     resultado.innerHTML = '❌ Error de conexión';
   }
 });
+
+// Guardar cambios (PUT)
+document.getElementById('btnGuardarCambios').addEventListener('click', async () => {
+  const id = document.getElementById('chismeForm').getAttribute('data-id');
+  const actualizado = {
+    nombre: document.getElementById('nombre').value,
+    edad: document.getElementById('edad').value,
+    color: document.getElementById('colorFavorito').value,
+    gusta: document.getElementById('quienLeGusta').value
+  };
+
+  try {
+    const res = await fetch(`https://chismografo-17nu.onrender.com/usuarios/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(actualizado)
+    });
+    if (res.ok) {
+      resultado.innerHTML = `🔄 ${actualizado.nombre} fue actualizado correctamente 🎉`;
+      document.getElementById('chismeForm').reset();
+      document.getElementById('chismeForm').removeAttribute('data-id');
+    } else {
+      resultado.innerHTML = '❌ Error al actualizar';
+    }
+  } catch (err) {
+    console.error(err);
+    resultado.innerHTML = '❌ Error de conexión';
+  }
+});
+
