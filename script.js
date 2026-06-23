@@ -65,7 +65,7 @@ document.getElementById('btnLeer').addEventListener('click', async () => {
   }
 });
 
-// ✏️ Mostrar usuarios para editar
+// ✏️ Mostrar usuarios para editar con botón Guardar
 document.getElementById('btnActualizar').addEventListener('click', async () => {
   try {
     const res = await fetch('https://chismografo-17nu.onrender.com/usuarios');
@@ -89,7 +89,10 @@ document.getElementById('btnActualizar').addEventListener('click', async () => {
           <td>${u.edad}</td>
           <td>${u.color}</td>
           <td>${u.gusta}</td>
-          <td><button onclick="editarUsuario('${u._id}','${u.nombre}','${u.edad}','${u.color}','${u.gusta}')">✏️ Editar</button></td>
+          <td>
+            <button onclick="editarUsuario('${u._id}','${u.nombre}','${u.edad}','${u.color}','${u.gusta}')">✏️ Editar</button>
+            <button onclick="guardarCambiosDirecto('${u._id}')">💾 Guardar cambios</button>
+          </td>
         </tr>
       `;
     });
@@ -108,61 +111,11 @@ function editarUsuario(id, nombre, edad, color, gusta) {
   document.getElementById('edad').value = edad;
   document.getElementById('colorFavorito').value = color;
   document.getElementById('quienLeGusta').value = gusta;
-
-  // Guardamos el ID en un atributo oculto
   document.getElementById('chismeForm').setAttribute('data-id', id);
 }
 
-// Cuando vuelves a presionar Actualizar, se manda el PUT
-async function guardarCambios() {
-  const id = document.getElementById('chismeForm').getAttribute('data-id');
-  const actualizado = {
-    nombre: document.getElementById('nombre').value,
-    edad: document.getElementById('edad').value,
-    color: document.getElementById('colorFavorito').value,
-    gusta: document.getElementById('quienLeGusta').value
-  };
-
-  try {
-    const res = await fetch(`https://chismografo-17nu.onrender.com/usuarios/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(actualizado)
-    });
-    if (res.ok) {
-      resultado.innerHTML = `🔄 ${actualizado.nombre} fue actualizado correctamente 🎉`;
-    } else {
-      resultado.innerHTML = '❌ Error al actualizar';
-    }
-  } catch (err) {
-    console.error(err);
-    resultado.innerHTML = '❌ Error de conexión';
-  }
-}
-
-
-// 🗑️ Eliminar usuario
-document.getElementById('btnEliminar').addEventListener('click', async () => {
-  const id = prompt("Escribe el ID del usuario a eliminar:");
-  try {
-    const res = await fetch(`https://chismografo-17nu.onrender.com/usuarios/${id}`, {
-      method: 'DELETE'
-    });
-    if (res.ok) {
-      resultado.innerHTML = `🗑️ Usuario con ID ${id} fue eliminado correctamente`;
-      document.getElementById('chismeForm').reset();
-    } else {
-      resultado.innerHTML = '❌ Error al eliminar';
-    }
-  } catch (err) {
-    console.error(err);
-    resultado.innerHTML = '❌ Error de conexión';
-  }
-});
-
-// Guardar cambios (PUT)
-document.getElementById('btnGuardarCambios').addEventListener('click', async () => {
-  const id = document.getElementById('chismeForm').getAttribute('data-id');
+// Guardar cambios directamente desde la tabla
+async function guardarCambiosDirecto(id) {
   const actualizado = {
     nombre: document.getElementById('nombre').value,
     edad: document.getElementById('edad').value,
@@ -187,5 +140,23 @@ document.getElementById('btnGuardarCambios').addEventListener('click', async () 
     console.error(err);
     resultado.innerHTML = '❌ Error de conexión';
   }
-});
+}
 
+// 🗑️ Eliminar usuario
+document.getElementById('btnEliminar').addEventListener('click', async () => {
+  const id = prompt("Escribe el ID del usuario a eliminar:");
+  try {
+    const res = await fetch(`https://chismografo-17nu.onrender.com/usuarios/${id}`, {
+      method: 'DELETE'
+    });
+    if (res.ok) {
+      resultado.innerHTML = `🗑️ Usuario con ID ${id} fue eliminado correctamente`;
+      document.getElementById('chismeForm').reset();
+    } else {
+      resultado.innerHTML = '❌ Error al eliminar';
+    }
+  } catch (err) {
+    console.error(err);
+    resultado.innerHTML = '❌ Error de conexión';
+  }
+});
