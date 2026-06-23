@@ -28,7 +28,7 @@ document.getElementById('btnCrear').addEventListener('click', async () => {
   }
 });
 
-// 👁️ Leer usuarios
+// 👁️ Leer usuarios con botón de eliminar
 document.getElementById('btnLeer').addEventListener('click', async () => {
   try {
     const res = await fetch('https://chismografo-17nu.onrender.com/usuarios');
@@ -43,6 +43,7 @@ document.getElementById('btnLeer').addEventListener('click', async () => {
           <th>🎂 Edad</th>
           <th>🎨 Color Favorito</th>
           <th>💖 Le gusta</th>
+          <th>🗑️ Acción</th>
         </tr>
     `;
     datos.forEach(u => {
@@ -53,6 +54,9 @@ document.getElementById('btnLeer').addEventListener('click', async () => {
           <td>${u.edad}</td>
           <td>${u.color}</td>
           <td>${u.gusta}</td>
+          <td>
+            <button onclick="eliminarUsuario('${u._id}', '${u.nombre}')">🗑️ Eliminar</button>
+          </td>
         </tr>
       `;
     });
@@ -130,12 +134,22 @@ async function guardarCambiosFila(id) {
   }
 }
 
-function eliminarUsuario() {
-  const nombre = prompt("Escribe el nombre del usuario a eliminar:");
-  if (nombre) {
-    fetch(`/usuarios/${nombre}`, { method: 'DELETE' })
-      .then(res => res.json())
-      .then(data => alert(data.mensaje))
-      .catch(() => alert("Error al eliminar"));
+// 🗑️ Eliminar usuario desde la lista
+async function eliminarUsuario(id, nombre) {
+  if (confirm(`¿Seguro que quieres eliminar a ${nombre}?`)) {
+    try {
+      const res = await fetch(`https://chismografo-17nu.onrender.com/usuarios/${id}`, {
+        method: 'DELETE'
+      });
+      if (res.ok) {
+        alert(`🗑️ ${nombre} fue eliminado correctamente`);
+        document.getElementById('btnLeer').click(); // refresca la lista
+      } else {
+        alert('❌ Error al eliminar');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('❌ Error de conexión');
+    }
   }
 }
