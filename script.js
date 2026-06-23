@@ -85,13 +85,12 @@ document.getElementById('btnActualizar').addEventListener('click', async () => {
     datos.forEach(u => {
       tabla += `
         <tr>
-          <td>${u.nombre}</td>
-          <td>${u.edad}</td>
-          <td>${u.color}</td>
-          <td>${u.gusta}</td>
+          <td><input type="text" id="nombre-${u._id}" value="${u.nombre}"></td>
+          <td><input type="number" id="edad-${u._id}" value="${u.edad}"></td>
+          <td><input type="text" id="color-${u._id}" value="${u.color}"></td>
+          <td><input type="text" id="gusta-${u._id}" value="${u.gusta}"></td>
           <td>
-            <button onclick="editarUsuario('${u._id}','${u.nombre}','${u.edad}','${u.color}','${u.gusta}')">✏️ Editar</button>
-            <button onclick="guardarCambiosDirecto('${u._id}')">💾 Guardar cambios</button>
+            <button onclick="guardarCambiosFila('${u._id}')">💾 Guardar cambios</button>
           </td>
         </tr>
       `;
@@ -105,22 +104,13 @@ document.getElementById('btnActualizar').addEventListener('click', async () => {
   }
 });
 
-// Función para llenar el formulario con los datos seleccionados
-function editarUsuario(id, nombre, edad, color, gusta) {
-  document.getElementById('nombre').value = nombre;
-  document.getElementById('edad').value = edad;
-  document.getElementById('colorFavorito').value = color;
-  document.getElementById('quienLeGusta').value = gusta;
-  document.getElementById('chismeForm').setAttribute('data-id', id);
-}
-
-// Guardar cambios directamente desde la tabla
-async function guardarCambiosDirecto(id) {
+// Guardar cambios directamente desde la fila
+async function guardarCambiosFila(id) {
   const actualizado = {
-    nombre: document.getElementById('nombre').value,
-    edad: document.getElementById('edad').value,
-    color: document.getElementById('colorFavorito').value,
-    gusta: document.getElementById('quienLeGusta').value
+    nombre: document.getElementById(`nombre-${id}`).value,
+    edad: document.getElementById(`edad-${id}`).value,
+    color: document.getElementById(`color-${id}`).value,
+    gusta: document.getElementById(`gusta-${id}`).value
   };
 
   try {
@@ -131,8 +121,6 @@ async function guardarCambiosDirecto(id) {
     });
     if (res.ok) {
       resultado.innerHTML = `🔄 ${actualizado.nombre} fue actualizado correctamente 🎉`;
-      document.getElementById('chismeForm').reset();
-      document.getElementById('chismeForm').removeAttribute('data-id');
     } else {
       resultado.innerHTML = '❌ Error al actualizar';
     }
