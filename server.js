@@ -23,7 +23,7 @@ const Usuario = mongoose.model('Usuario', new mongoose.Schema({
   gusta: String
 }));
 
-// Rutas CRUD
+// ➕ Crear usuario
 app.post('/usuarios', async (req, res) => {
   try {
     const nuevo = new Usuario(req.body);
@@ -34,14 +34,36 @@ app.post('/usuarios', async (req, res) => {
   }
 });
 
+// 👁️ Leer usuarios
 app.get('/usuarios', async (req, res) => {
   const usuarios = await Usuario.find();
   res.json(usuarios);
 });
 
+// ✏️ Actualizar usuario por ID
+app.put('/usuarios/:id', async (req, res) => {
+  try {
+    const actualizado = await Usuario.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true } // devuelve el documento ya actualizado
+    );
+    if (!actualizado) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+    res.json(actualizado);
+  } catch (err) {
+    res.status(500).json({ error: 'Error al actualizar' });
+  }
+});
+
+// 🗑️ Eliminar usuario por ID
 app.delete('/usuarios/:id', async (req, res) => {
   try {
-    await Usuario.findByIdAndDelete(req.params.id);
+    const eliminado = await Usuario.findByIdAndDelete(req.params.id);
+    if (!eliminado) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
     res.json({ mensaje: 'Usuario eliminado ✅' });
   } catch (err) {
     res.status(500).json({ error: 'Error al eliminar' });
